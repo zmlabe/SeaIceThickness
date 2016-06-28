@@ -1,5 +1,5 @@
 # SeaIceThickness
-UCI Data Science Initiative Fellowship, Summer 2016 ```[Python]```
+[UCI Data Science](http://datascience.uci.edu/) Initiative Fellowship - Summer 2016 ```[Python]```
 
 ######Under construction...
 
