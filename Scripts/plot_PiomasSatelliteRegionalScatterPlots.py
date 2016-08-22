@@ -787,3 +787,74 @@ plt.text(-3,-3,r'\textbf{sit( PIOMAS )}',fontsize=16,rotation=0)
 plt.text(-10.3,10.5,r'\textbf{sit( CryoSat-2 )}',fontsize=16,rotation=90)
 
 plt.savefig(directoryfigure + 'regionalyrtest2.png',dpi=300)
+
+###########################################################################
+###########################################################################
+###########################################################################
+### Plot regions by year for a single graph
+### Region 1
+
+def plotYrRegional(varx,vary,time,region):
+    directoryfigure2 = '/home/zlabe/Desktop/RegionalYrScatter/%s/region%s/' % (time,region)
+    
+    if time == 'icesat':
+        years = np.arange(2004,2010,1)
+        labely = 'ICESat'
+        color = 'seagreen'
+        edgecolor = 'darkgreen'
+    elif time == 'cryosat':
+        years = np.arange(2011,2016,1)
+        labely = 'CryoSat-2'
+        color = 'steelblue'
+        edgecolor = 'darkblue'
+     
+    timex = np.arange(0,8,1)
+    timey = np.arange(0,8,1)     
+    
+    for i in xrange(len(varx)):
+        vx= np.ravel(varx[i,:,:])
+        vy = np.ravel(vary[i,:,:])
+        mask = np.isfinite(vx) & np.isfinite(vy)
+        fit = np.polyfit(vx[mask],vy[mask],1)
+        slope,intercept,r,p_value,std_err = sts.stats.linregress(vx[mask],
+                                                                 vy[mask])
+        m = fit[0]
+        b = fit[1]
+        linetest = m*timex + b        
+        
+        fig = plt.figure()
+        ax = plt.subplot(111)
+        
+        plt.plot(timex,timey,color='k',linewidth=3,zorder=1)
+        plt.scatter(varx[i,:,:],vary[i,:,:],label='%s' % years,
+                    color=color,zorder=2,s=8,
+                    edgecolor=edgecolor,linewidth=0.3)
+        ax.plot(timex,linetest,color='r',zorder=3)
+        
+        ax.set_xlim((0,7))
+        ax.set_ylim((0,7))
+        ax.set_xticklabels(map(str,np.arange(0,8,1)))
+        ax.set_yticklabels(map(str,np.arange(0,8,1)))
+        adjust_spines(ax, ['left', 'bottom'])
+        ax.spines['top'].set_color('none')
+        ax.spines['right'].set_color('none')
+        
+        plt.xlabel(r'sit( PIOMAS )',fontsize=13)
+        plt.ylabel(r'sit( %s )' % labely,fontsize=13)
+        plt.title(r'\textbf{Region %s -- %s}' % (region,years[i]),fontsize=13)
+        ax.text(6.1,0.5,r'\textbf{r$^2$= %s}' % round(r,2),color='k',
+                fontsize=11)
+        
+        fig.subplots_adjust(bottom=0.15)
+                    
+        plt.savefig(directoryfigure2 + '%s_regionScat_%s.png' % (time,years[i]),
+                    dpi=300)
+                    
+plotYrRegional(sitpi1,siti1,'icesat',1)
+plotYrRegional(sitpi2,siti2,'icesat',2)
+plotYrRegional(sitpi3,siti3,'icesat',3)
+plotYrRegional(sitpi4,siti4,'icesat',4)
+plotYrRegional(sitpc1,sitc1,'cryosat',1)
+plotYrRegional(sitpc2,sitc2,'cryosat',2)
+plotYrRegional(sitpc3,sitc3,'cryosat',3)
+plotYrRegional(sitpc4,sitc4,'cryosat',4)

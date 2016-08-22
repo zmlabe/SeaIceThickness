@@ -16,6 +16,7 @@ import datetime
 import scipy.stats as sts
 import matplotlib.mlab as mlab
 from matplotlib.ticker import NullFormatter
+import statsmodels.api as sm
 
 ### Define directories
 directorydata = '/home/zlabe/Surtsey/seaice_obs/Thk/March/'  
@@ -275,7 +276,10 @@ c = fit[2]
 linetest = m*timex**2 + b*timex + c
 
 axScatter.plot(timex,timey,color='k',linewidth=3,zorder=1)
-axScatter.plot(timex,linetest,color='r',zorder=7)
+#axScatter.plot(timex,linetest,color='r',zorder=7)
+
+smoothed = sm.nonparametric.lowess(vary,varx)
+axScatter.plot(smoothed[:,0],smoothed[:,1],color='r',zorder=8)
 
 axScatter.scatter(sitp2[0,:,:],siti[0,:,:],label='2004',color='olive',zorder=2,s=5)
 axScatter.scatter(sitp2[1,:,:],siti[1,:,:],label='2005',color='rosybrown',zorder=3,s=5)
@@ -338,10 +342,13 @@ axScatter.grid(color='darkgrey',linewidth=0.4)
 #### Add labels
 axScatter.set_xlabel(r'sit(PIOMAS) (m)')
 axScatter.set_ylabel(r'sit(ICESat-J) (m)')
-#
+
 #### Adjust plot
 fig.subplots_adjust(top=0.95)
 fig.subplots_adjust(bottom=0.15)
+
+### Add text
+axHistx.text(5.05,0.05,r'*LOWESS Smoothing',fontsize=8)
 
 plt.savefig(directoryfigure + 'scattertest2.png',dpi=300)
 
