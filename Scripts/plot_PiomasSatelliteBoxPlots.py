@@ -19,8 +19,8 @@ from matplotlib.ticker import NullFormatter
 
 ### Define directories
 directorydata = '/home/zlabe/Surtsey/seaice_obs/Thk/March/'  
-directoryfigure = '/home/zlabe/Desktop/'
-#directoryfigure = '/home/zlabe/Documents/Research/SeaIceThickness/Figures/' 
+#directoryfigure = '/home/zlabe/Desktop/'
+directoryfigure = '/home/zlabe/Documents/Research/SeaIceThickness/Figures/' 
 
 yearmin = 1979
 yearmax = 2015
@@ -186,9 +186,9 @@ ax.tick_params('both',length=5.5,width=2,which='major')
 ax.tick_params(axis='x',bottom='off',labelbottom='off') 
 
 bx = plt.boxplot(dataq,0,'',patch_artist=True)
-plt.plot(timex,m*timex + b,linestyle='-',color='k',linewidth=3,alpha=0.7)
-plt.plot(timex,mx*timex + bax,linestyle='-',color='k',linewidth=3,alpha=0.7)
-plt.plot(timex,mn*timex + bn,linestyle='-',color='k',linewidth=3,alpha=0.7)
+#plt.plot(timex,m*timex + b,linestyle='-',color='k',linewidth=3,alpha=0.7)
+#plt.plot(timex,mx*timex + bax,linestyle='-',color='k',linewidth=3,alpha=0.7)
+#plt.plot(timex,mn*timex + bn,linestyle='-',color='k',linewidth=3,alpha=0.7)
 
 plt.text(1.04,0,r'\textbf{2004}',fontsize=13)
 plt.text(3.04,0,r'\textbf{2005}',fontsize=13)
@@ -197,7 +197,7 @@ plt.text(7.04,0,r'\textbf{2007}',fontsize=13)
 plt.text(9.04,0,r'\textbf{2008}',fontsize=13)
 plt.text(11.04,0,r'\textbf{2009}',fontsize=13)
 
-plt.text(12.3,4.8,r'PIOMAS',fontsize=18,color='darkgrey',ha='right')
+plt.text(12.3,4.8,r'PIOMAS',fontsize=18,color='dimgrey',ha='right')
 plt.text(12.3,4.4,r'ICESat-J',fontsize=18,color='steelblue',ha='right')
 
 for i in bx['caps']:
@@ -205,7 +205,7 @@ for i in bx['caps']:
 for whisker in bx['whiskers']:
     whisker.set(color='k',linestyle='-')
 for box in bx['boxes'][::2]: # PIOMAS
-    box.set(color='darkgrey')
+    box.set(color='dimgrey')
 for box in bx['boxes'][1::2]:
     box.set(color='steelblue')
 
@@ -213,4 +213,4 @@ plt.yticks(np.arange(0.5,5.5,0.5),map(str,np.arange(0.5,5.5,0.5)))
 
 plt.ylabel(r'Thickness (m)',fontsize=13)
 
-plt.savefig(directoryfigure + 'boxtesta.png',dpi=300)
+plt.savefig(directoryfigure + 'boxtesta.png',dpi=600)

@@ -152,14 +152,14 @@ plt.rcParams['font.family'] = 'sans-serif'
 plt.rcParams['font.sans-serif'] = 'Avant Garde'
 
 ### Plot
-trendp = plt.plot(linep,linewidth=1.4,linestyle='-',color='seagreen'),
+trendp = plt.plot(linep,linewidth=1.4,linestyle='-',color='steelblue'),
 sg = plt.plot(mean_sitsg,linestyle='-',linewidth=0.8,color='saddlebrown',
              label=r'\textbf{ICESat-G}',marker='o',markersize=3)
-sj = plt.plot(mean_sitsj,linestyle='-',linewidth=0.8,color='darkslateblue',
+sj = plt.plot(mean_sitsj,linestyle='-',linewidth=0.8,color='seagreen',
              label=r'\textbf{ICESat-J}',marker='o',markersize=3)
 c = plt.plot(mean_cryo,linestyle='-',linewidth=0.8,color='fuchsia',
              label=r'\textbf{CryoSat-2}',marker='o',markersize=3)
-p = plt.plot(mean_sitp,linestyle='-',linewidth=0.8,color='seagreen',
+p = plt.plot(mean_sitp,linestyle='-',linewidth=0.8,color='steelblue',
              label=r'\textbf{PIOMAS}',marker='^',markersize=4)            
 
 ### Labels for x/y
@@ -167,7 +167,7 @@ labelsy = map(str,np.arange(1,5,1))
 labelsx = map(str,np.arange(1979,2016,3))
 plt.xticks(np.arange(0,37,3),labelsx)
 plt.yticks(np.arange(1,5,1),labelsy)
-plt.ylabel(r'\textbf{Thickness (meters)}',fontsize=11)
+plt.ylabel(r'\textbf{Thickness (m)}',fontsize=11)
 
 ### Adjust axes in time series plots 
 def adjust_spines(ax, spines):
@@ -190,7 +190,7 @@ def adjust_spines(ax, spines):
 adjust_spines(ax, ['left', 'bottom'])
 ax.spines['top'].set_color('none')
 ax.spines['right'].set_color('none')
-plt.grid(color='k',zorder=1,alpha=0.2)
+#plt.grid(color='k',zorder=1,alpha=0.2)
 
 ### Add limits to axes
 plt.ylim([1,4])
@@ -202,8 +202,8 @@ plt.legend(shadow=False,fontsize=9,loc='center',
                         frameon=False)
 
 ### Add title
-fig.suptitle(r'\textbf{March Average Sea Ice Thickness (1979-2015)}',
-             fontsize=14)
+#fig.suptitle(r'\textbf{March Average Sea Ice Thickness (1979-2015)}',
+#             fontsize=14)
              
 ### Create subplot  
 diffg = mean_sitsg - mean_sitp 
@@ -217,10 +217,10 @@ yearsub = np.arange(2003,2016,2)
 a = plt.axes([.18, .18, .25, .25], axisbg='w')
 for axis in ['top','bottom','left','right']:
   a.spines[axis].set_linewidth(2)
-a.set_axis_bgcolor('darkgrey')
+#a.set_axis_bgcolor('dimgrey')
 plt.plot(zero,color='k',linewidth=2)        
 plt.plot(diffg,color='saddlebrown',marker='o',markersize=3)
-plt.plot(diffj,color='darkslateblue',marker='o',markersize=3)
+plt.plot(diffj,color='seagreen',marker='o',markersize=3)
 plt.plot(diffc,color='fuchsia',marker='o',markersize=3)
 
 plt.title(r'\textbf{Difference, [Satellite -- PIOMAS]}',fontsize=7)
@@ -240,8 +240,8 @@ masking[np.where(masking == 0.)] = np.nan
 a2 = plt.axes([.63, .59, .29, .29], axisbg='w')   
 m = Basemap(projection='npstere',boundinglat=60,lon_0=-90,resolution='l',round=True)
 m.drawmapboundary(fill_color = 'white')
-m.drawcoastlines(color = 'darkgrey',linewidth=0.2)
-m.drawlsmask(land_color='darkgrey',ocean_color='snow')
+m.drawcoastlines(color = 'dimgrey',linewidth=0.2)
+m.drawlsmask(land_color='dimgrey',ocean_color='snow')
 parallels = np.arange(50,90,10)
 meridians = np.arange(-180,180,30)
 m.drawparallels(parallels,labels=[False,False,False,False],linewidth=0.25)
@@ -249,7 +249,7 @@ m.drawmeridians(meridians,labels=[True,True,True,True],linewidth=0.25,
                 fontsize=4)
 
 cs = m.contourf(lons,lats,masking,np.arange(0,3,1),
-                latlon=True,colors='seagreen')
+                latlon=True,colors='steelblue')
 
 fig.subplots_adjust(bottom=0.15)
 

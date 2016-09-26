@@ -239,7 +239,7 @@ def plotDifference(lats,lons,years,thk_diff,directory):
     cbar = fig.colorbar(cs,cax=cbar_ax,orientation='horizontal',
                         extend='both',extendfrac=0.07)
 
-    cbar.set_label(r'Thickness (meters)')
+    cbar.set_label(r'Thickness (m)')
     cbar.set_ticks(np.arange(-3,4,1))
     cbar.set_ticklabels(map(str,np.arange(-3,4,1)))   
     
