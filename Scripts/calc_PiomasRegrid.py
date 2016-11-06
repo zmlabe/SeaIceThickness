@@ -275,7 +275,6 @@ lats,lons,oflux = readPiomas(directorydata,'oflux',years,0.0)
 #snown = regrid(lats,lons,latsq,lonsq,snow,years)
 #ofluxn = regrid(lats,lons,latsq,lonsq,oflux,years)
 
-gm
 #plotPiomas(directoryfigure,lats,lons,sitn,'thick',8,0,years)
 
 #netcdfPiomas(latsq,lonsq,ofluxn,directorydata)
