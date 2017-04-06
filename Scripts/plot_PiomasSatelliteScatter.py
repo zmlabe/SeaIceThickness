@@ -19,9 +19,10 @@ from matplotlib.ticker import NullFormatter
 import statsmodels.api as sm
 
 ### Define directories
-directorydata = '/home/zlabe/Surtsey/seaice_obs/Thk/March/'  
+directorydata = '/home/zlabe/Surtsey/seaice_obs/Thk/March/' 
+directorydata2= '/home/zlabe/Surtsey/seaice_obs/PIOMAS/SeaIceConcentration/'  
 #directoryfigure = '/home/zlabe/Desktop/'
-directoryfigure = '/home/zlabe/Documents/Research/SeaIceThickness/Figures/' 
+directoryfigure = '/home/zlabe/Documents/Research/SeaIceThickness/Figures/Testsq/' 
 
 yearmin = 1979
 yearmax = 2015
@@ -38,7 +39,7 @@ titletime = currentmn + '/' + currentdy + '/' + currentyr
 
 print '\n' '--- PIOMAS/Satellites Scatter Plots (%s) ---' '\n' % titletime 
 
-def piomasReader(directory,segment,years):
+def piomasReader(directory,directory2,segment,years):
     
     filename = 'piomas_regrid_March_19792015.nc'
     
@@ -46,22 +47,33 @@ def piomasReader(directory,segment,years):
     lat = data.variables['lat'][:]
     lon = data.variables['lon'][:]
     
+    filename2 = 'piomas_regrid_sic_19792015.nc'
+    data2 = Dataset(directory2 + filename2)
+    
     if segment == 'sub':    # 1986-1994  
         timeslice = np.where((years >= 1986) & (years <= 1994))[0]
         sitp = data.variables['thick'][timeslice,:,:] 
+        sicp = data2.variables['sic'][timeslice,2,:,:] 
+        sitp2 = sitp / sicp
     elif segment == 'icej':    # 2004-2009
         timeslice = np.where((years >= 2004) & (years <= 2009))[0]
         sitp = data.variables['thick'][timeslice,:,:]
+        sicp = data2.variables['sic'][timeslice,2,:,:]
+        sitp2 = sitp / sicp
     elif segment == 'cryo':    # 2011-2015
         timeslice = np.where((years >= 2011) & (years <= 2015))[0]
         sitp = data.variables['thick'][timeslice,:,:]
+        sicp = data2.variables['sic'][timeslice,2,:,:]
+        sitp2 = sitp / sicp
     else:
         sitp = data.variables['thick'][:,:,:]
+        sicp = data2.variables['sic'][:,2,:,:]
+        sitp2 = sitp / sicp
         
     data.close()
     
     print 'Completed: PIOMAS data read!'
-    return lat,lon,sitp
+    return lat,lon,sitp2
     
 def subReader(directory):
     
@@ -95,9 +107,9 @@ def icesatReader(directory):
     
     
 ### Call functions
-lat,lon,sitp = piomasReader(directorydata,'sub',years)
-lat,lon,sitp2 = piomasReader(directorydata,'icej',years)
-lat,lon,sitp3 = piomasReader(directorydata,'cryo',years)
+lat,lon,sitp = piomasReader(directorydata,directorydata2,'sub',years)
+lat,lon,sitp2 = piomasReader(directorydata,directorydata2,'icej',years)
+lat,lon,sitp3 = piomasReader(directorydata,directorydata2,'cryo',years)
 lat,lon,sitb,meansitb = subReader(directorydata)
 lat,lon,siti,sitc = icesatReader(directorydata)
 

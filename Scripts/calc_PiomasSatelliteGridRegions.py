@@ -22,7 +22,7 @@ import iris.quickplot as qplt
 
 ### Define directories
 directorydata = '/home/zlabe/Surtsey/seaice_obs/Thk/March/'  
-directoryfigure = '/home/zlabe/Desktop/LargeGridCells/'
+directoryfigure = '/home/zlabe/Desktop/'
 #directoryfigure = '/home/zlabe/Documents/Research/SeaIceThickness/Figures/' 
 
 yearmin = 1979
@@ -201,14 +201,14 @@ def transformGrid(var,la,lo,var2,lat,lon,types):
                         m.fillcontinents(color='darkgrey')
                         
                         fig.subplots_adjust(bottom=0.15)
-                        plt.savefig(directoryfigure2 + '%s_%s_%s.png' % (types,j,k),dpi=300)
+#                        plt.savefig(directoryfigure2 + '%s_%s_%s.png' % (types,j,k),dpi=300)
     return varn_re,rss
 
-sitnewpi,ri = transformGrid(sitpi,7,8,siti,lat,lon,'icesat')
-sitnewc,rc = transformGrid(sitpc,7,8,sitc,lat,lon,'cryosat') 
+#sitnewpi,ri = transformGrid(sitpi,7,8,siti,lat,lon,'icesat')
+#sitnewc,rc = transformGrid(sitpc,7,8,sitc,lat,lon,'cryosat') 
 
-r = ri
-#r = rc
+#r = ri
+r = rc
 
 lat = lat
 lon = lon

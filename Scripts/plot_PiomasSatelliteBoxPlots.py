@@ -180,9 +180,9 @@ def adjust_spines(ax, spines):
 adjust_spines(ax, ['left', 'bottom'])
 ax.spines['top'].set_color('none')
 ax.spines['right'].set_color('none')
-ax.spines['bottom'].set_color('none')
-ax.tick_params(right='off',bottom='off')
-ax.tick_params('both',length=5.5,width=2,which='major') 
+ax.spines['left'].set_color('darkgrey')
+ax.spines['bottom'].set_color('darkgrey')
+ax.tick_params('both',length=4,width=1.5,which='major',color='darkgrey')
 ax.tick_params(axis='x',bottom='off',labelbottom='off') 
 
 bx = plt.boxplot(dataq,0,'',patch_artist=True)

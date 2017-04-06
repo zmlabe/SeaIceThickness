@@ -20,8 +20,9 @@ from matplotlib.ticker import NullFormatter
 
 ### Define directories
 directorydata = '/home/zlabe/Surtsey/seaice_obs/Thk/March/'  
-directoryfigure = '/home/zlabe/Desktop/'
-#directoryfigure = '/home/zlabe/Documents/Research/SeaIceThickness/Figures/' 
+directorydata2= '/home/zlabe/Surtsey/seaice_obs/PIOMAS/SeaIceConcentration/' 
+#directoryfigure = '/home/zlabe/Desktop/'
+directoryfigure = '/home/zlabe/Documents/Research/SeaIceThickness/Figures/Testsq/' 
 
 yearmin = 1979
 yearmax = 2015
@@ -38,7 +39,7 @@ titletime = currentmn + '/' + currentdy + '/' + currentyr
 
 print '\n' '--- PIOMAS/Satellites Yearly Scatter Plots (%s) ---' '\n' % titletime 
 
-def piomasReader(directory,segment,years):
+def piomasReader(directory,directory2,segment,years):
     
     filename = 'piomas_regrid_March_19792015.nc'
     
@@ -46,17 +47,28 @@ def piomasReader(directory,segment,years):
     lat = data.variables['lat'][:]
     lon = data.variables['lon'][:]
     
+    filename2 = 'piomas_regrid_sic_19792015.nc'
+    data2 = Dataset(directory2 + filename2)
+    
     if segment == 'sub':    # 1986-1994  
         timeslice = np.where((years >= 1986) & (years <= 1994))[0]
-        sitp = data.variables['thick'][timeslice,:,:] 
+        sitp = data2.variables['thick'][timeslice,:,:] 
+        sicp = data2.variables['sic'][timeslice,2,:,:] 
+        sitp = sitp / sicp
     elif segment == 'icej':    # 2004-2009
         timeslice = np.where((years >= 2004) & (years <= 2009))[0]
         sitp = data.variables['thick'][timeslice,:,:]
+        sicp = data2.variables['sic'][timeslice,2,:,:]
+        sitp = sitp / sicp
     elif segment == 'cryo':    # 2011-2015
         timeslice = np.where((years >= 2011) & (years <= 2015))[0]
         sitp = data.variables['thick'][timeslice,:,:]
+        sicp = data2.variables['sic'][timeslice,2,:,:]
+        sitp = sitp / sicp
     else:
         sitp = data.variables['thick'][:,:,:]
+        sicp = data2.variables['sic'][:,2,:,:]
+        sitp = sitp / sicp
         
     data.close()
     
@@ -80,8 +92,8 @@ def icesatReader(directory):
     return lat,lon,siti,sitc
       
 ### Call functions
-lat,lon,sitpi = piomasReader(directorydata,'icej',years)
-lat,lon,sitpc = piomasReader(directorydata,'cryo',years)
+lat,lon,sitpi = piomasReader(directorydata,directorydata2,'icej',years)
+lat,lon,sitpc = piomasReader(directorydata,directorydata2,'cryo',years)
 lat,lon,siti,sitc = icesatReader(directorydata)
 
 timex = np.arange(0,8,1)
@@ -185,7 +197,7 @@ adjust_spines(ax1, ['left', 'bottom'])
 ax1.spines['top'].set_color('none')
 ax1.spines['right'].set_color('none')
 ax1.text(0,6.2,r'2004',color='steelblue',fontsize=11)
-ax1.text(4.7,0.5,r'r$^2$= %s' % round(r1,2),color='k',fontsize=7)
+ax1.text(4.7,0.5,r'r$^2$= %s' % round(r1**2,2),color='k',fontsize=7)
 
 ax2 = plt.subplot(232)
 plt.scatter(sitpi[1,:,:],siti[1,:,:],label='2005',color='steelblue',zorder=2,s=2)
@@ -199,7 +211,7 @@ adjust_spines(ax2, ['left', 'bottom'])
 ax2.spines['top'].set_color('none')
 ax2.spines['right'].set_color('none')
 ax2.text(0,6.2,r'2005',color='steelblue',fontsize=11)
-ax2.text(4.7,0.5,r'r$^2$= %s' % round(r2,2),color='k',fontsize=7)
+ax2.text(4.7,0.5,r'r$^2$= %s' % round(r2**2,2),color='k',fontsize=7)
 
 ax3 = plt.subplot(233)
 plt.scatter(sitpi[2,:,:],siti[2,:,:],label='2006',color='steelblue',zorder=2,s=2)
@@ -213,7 +225,7 @@ adjust_spines(ax3, ['left', 'bottom'])
 ax3.spines['top'].set_color('none')
 ax3.spines['right'].set_color('none')
 ax3.text(0,6.2,r'2006',color='steelblue',fontsize=11)
-ax3.text(4.7,0.5,r'r$^2$= %s' % round(r3,2),color='k',fontsize=7)
+ax3.text(4.7,0.5,r'r$^2$= %s' % round(r3**2,2),color='k',fontsize=7)
 
 ax4 = plt.subplot(234)
 plt.scatter(sitpi[3,:,:],siti[3,:,:],label='2007',color='steelblue',zorder=2,s=2)
@@ -227,7 +239,7 @@ adjust_spines(ax4, ['left', 'bottom'])
 ax4.spines['top'].set_color('none')
 ax4.spines['right'].set_color('none')
 ax4.text(0,6.2,r'2007',color='steelblue',fontsize=11)
-ax4.text(4.7,0.5,r'r$^2$= %s' % round(r4,2),color='k',fontsize=7)
+ax4.text(4.7,0.5,r'r$^2$= %s' % round(r4**2,2),color='k',fontsize=7)
 
 ax5 = plt.subplot(235)
 plt.scatter(sitpi[4,:,:],siti[4,:,:],label='2008',color='steelblue',zorder=2,s=2)
@@ -241,7 +253,7 @@ adjust_spines(ax5, ['left', 'bottom'])
 ax5.spines['top'].set_color('none')
 ax5.spines['right'].set_color('none')
 ax5.text(0,6.2,r'2008',color='steelblue',fontsize=11)
-ax5.text(4.7,0.5,r'r$^2$= %s' % round(r5,2),color='k',fontsize=7)
+ax5.text(4.7,0.5,r'r$^2$= %s' % round(r5**2,2),color='k',fontsize=7)
 
 ax6 = plt.subplot(236)
 plt.scatter(sitpi[5,:,:],siti[5,:,:],label='2009',color='steelblue',zorder=2,s=2)
@@ -255,7 +267,7 @@ adjust_spines(ax6, ['left', 'bottom'])
 ax6.spines['top'].set_color('none')
 ax6.spines['right'].set_color('none')
 ax6.text(0,6.2,r'2009',color='steelblue',fontsize=11)
-ax6.text(4.7,0.5,r'r$^2$= %s' % round(r6,2),color='k',fontsize=7)
+ax6.text(4.7,0.5,r'r$^2$= %s' % round(r6**2,2),color='k',fontsize=7)
 
 fig.subplots_adjust(wspace=.3)
 fig.subplots_adjust(hspace=.4)
@@ -336,7 +348,7 @@ adjust_spines(ax1, ['left', 'bottom'])
 ax1.spines['top'].set_color('none')
 ax1.spines['right'].set_color('none')
 ax1.text(0,6.2,r'2011',color='steelblue',fontsize=11)
-ax1.text(4.7,0.5,r'r$^2$= %s' % round(r1,2),color='k',fontsize=7)
+ax1.text(4.7,0.5,r'r$^2$= %s' % round(r1**2,2),color='k',fontsize=7)
 
 ax2 = plt.subplot(232)
 plt.scatter(sitpc[1,:,:],sitc[1,:,:],label='2012',color='steelblue',zorder=2,s=2)
@@ -350,7 +362,7 @@ adjust_spines(ax2, ['left', 'bottom'])
 ax2.spines['top'].set_color('none')
 ax2.spines['right'].set_color('none')
 ax2.text(0,6.2,r'2012',color='steelblue',fontsize=11)
-ax2.text(4.7,0.5,r'r$^2$= %s' % round(r2,2),color='k',fontsize=7)
+ax2.text(4.7,0.5,r'r$^2$= %s' % round(r2**2,2),color='k',fontsize=7)
 
 ax3 = plt.subplot(233)
 plt.scatter(sitpc[2,:,:],sitc[2,:,:],label='2013',color='steelblue',zorder=2,s=2)
@@ -364,7 +376,7 @@ adjust_spines(ax3, ['left', 'bottom'])
 ax3.spines['top'].set_color('none')
 ax3.spines['right'].set_color('none')
 ax3.text(0,6.2,r'2013',color='steelblue',fontsize=11)
-ax3.text(4.7,0.5,r'r$^2$= %s' % round(r3,2),color='k',fontsize=7)
+ax3.text(4.7,0.5,r'r$^2$= %s' % round(r3**2,2),color='k',fontsize=7)
 
 ax4 = plt.subplot(234)
 plt.scatter(sitpc[3,:,:],sitc[3,:,:],label='2014',color='steelblue',zorder=2,s=2)
@@ -378,7 +390,7 @@ adjust_spines(ax4, ['left', 'bottom'])
 ax4.spines['top'].set_color('none')
 ax4.spines['right'].set_color('none')
 ax4.text(0,6.2,r'2014',color='steelblue',fontsize=11)
-ax4.text(4.7,0.5,r'r$^2$= %s' % round(r4,2),color='k',fontsize=7)
+ax4.text(4.7,0.5,r'r$^2$= %s' % round(r4**2,2),color='k',fontsize=7)
 
 ax5 = plt.subplot(235)
 plt.scatter(sitpc[4,:,:],sitc[4,:,:],label='2015',color='steelblue',zorder=2,s=2)
@@ -392,7 +404,7 @@ adjust_spines(ax5, ['left', 'bottom'])
 ax5.spines['top'].set_color('none')
 ax5.spines['right'].set_color('none')
 ax5.text(0,6.2,r'2015',color='steelblue',fontsize=11)
-ax5.text(4.7,0.5,r'r$^2$= %s' % round(r5,2),color='k',fontsize=7)
+ax5.text(4.7,0.5,r'r$^2$= %s' % round(r5**2,2),color='k',fontsize=7)
 
 fig.subplots_adjust(wspace=.3)
 fig.subplots_adjust(hspace=.4)
