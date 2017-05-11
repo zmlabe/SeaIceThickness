@@ -249,7 +249,7 @@ plt.savefig(directoryfigure + 'scattertest.png',dpi=300)
 #
 #plt.savefig(directoryfigure + 'scattertest2.png',dpi=300)
 
-fig = plt.figure()
+fig = plt.figure(figsize=(7,7))
 #ax = plt.subplot(111)
 
 nullfmt = NullFormatter()
@@ -308,19 +308,19 @@ axScatter.set_yticklabels(map(str,np.arange(0,8,1)))
 binwidth=0.25
 bins = np.arange(0,7 + binwidth,binwidth)
 n,bins,patches = axHistx.hist(varx[mask],bins=bins,normed=True,
-             facecolor='dimgrey',edgecolor='w',alpha=1,linewidth=0.35)
+             facecolor='dimgrey',edgecolor='w',alpha=1,linewidth=0.45)
 n,binsy,patches = axHisty.hist(vary[mask],bins=bins,normed=True,
                                orientation='horizontal',
                                facecolor='dimgrey',edgecolor='w',
-                               alpha=1,linewidth=0.35)
+                               alpha=1,linewidth=0.45)
 
 mu,sigma = sts.norm.fit(varx[mask])             
 y = mlab.normpdf(bins,mu,sigma)
-lx = axHistx.plot(bins,y,'k-',linewidth=0.5)
+#lx = axHistx.plot(bins,y,'k-',linewidth=0.5)
 
 mu2,sigma2 = sts.norm.fit(vary[mask])
 y2 = mlab.normpdf(binsy,mu2,sigma2)
-ly = axHisty.plot(y2,binsy,'k-',linewidth=0.5)
+#ly = axHisty.plot(y2,binsy,'k-',linewidth=0.5)
 
 axHistx.spines['top'].set_color('none')
 axHistx.spines['right'].set_color('none')
@@ -332,6 +332,9 @@ axHisty.spines['left'].set_color('none')
 axHisty.spines['bottom'].set_color('none')
 axScatter.spines['top'].set_color('none')
 axScatter.spines['right'].set_color('none')
+axScatter.spines['left'].set_color('darkgrey')
+axScatter.spines['bottom'].set_color('darkgrey')
+axScatter.tick_params('both',length=4,width=1.5,which='major',color='darkgrey')
 
 axHistx.xaxis.set_ticks([])
 axHistx.yaxis.set_ticks([])
@@ -352,15 +355,15 @@ axScatter.legend(shadow=False,fontsize=7,loc='center',
 axScatter.grid(color='dimgrey',linewidth=0.4)
 
 #### Add labels
-axScatter.set_xlabel(r'\textbf{sit( PIOMAS )(m)}')
-axScatter.set_ylabel(r'\textbf{sit( ICESat-J )(m)}')
+axScatter.set_xlabel(r'\textbf{SIT( PIOMAS )(m)}')
+axScatter.set_ylabel(r'\textbf{SIT( ICESat-J )(m)}')
 
 #### Adjust plot
 fig.subplots_adjust(top=0.95)
 fig.subplots_adjust(bottom=0.15)
 
 ### Add text
-axHistx.text(5.05,0.05,r'*LOWESS Smoothing',fontsize=8)
+#axHistx.text(5.05,0.05,r'*LOWESS Smoothing',fontsize=8)
 
 plt.savefig(directoryfigure + 'scattertest2.png',dpi=800)
 
@@ -401,7 +404,9 @@ vp['cmins'].set_linewidth(0.5)
 vp['cmaxes'].set_linestyle('-')        
 vp['cmins'].set_linestyle('-')          
 vp['bodies'][0].set_facecolor('seagreen')
-vp['bodies'][1].set_facecolor('goldenrod')                      
+vp['bodies'][1].set_facecolor('goldenrod')      
+
+axb.text(-4,1.4,r'\textbf{[2004-2009]}',fontsize=10,color='darkgrey')     
 
 plt.xlim([0,9]) 
 plt.xticks(np.arange(0,10,1),[]) 
@@ -443,7 +448,9 @@ vp['cmeans'].set_linewidth(2)
 vp['cmaxes'].set_linestyle('-')        
 vp['cmins'].set_linestyle('-')              
 vp['bodies'][0].set_facecolor('seagreen')
-vp['bodies'][1].set_facecolor('darkblue')                      
+vp['bodies'][1].set_facecolor('darkblue')        
+
+axb.text(-4,1.4,r'\textbf{[1986-1994]}',fontsize=10,color='darkgrey')              
  
 plt.xlim([0,9])                    
 plt.xticks(np.arange(0,10,1),[])      
@@ -467,6 +474,8 @@ axb.spines['right'].set_color('none')
 axb.spines['left'].set_color('none')
 axb.xaxis.set_ticks_position('bottom')
 axb.tick_params(left='off',right='off')
+axb.spines['bottom'].set_color('darkgrey')
+axb.tick_params('both',length=4,width=1.5,which='major',color='darkgrey')
 
 axb.set_aspect(1.9)
 
@@ -485,11 +494,12 @@ vp['cmeans'].set_linewidth(2)
 vp['cmaxes'].set_linestyle('-')        
 vp['cmins'].set_linestyle('-')              
 vp['bodies'][0].set_facecolor('seagreen')
-vp['bodies'][1].set_facecolor('darkred')                      
+vp['bodies'][1].set_facecolor('darkred')    
+
+axb.text(-4,1.4,r'\textbf{[2011-2015]}',fontsize=10,color='darkgrey')                  
                                          
 plt.xticks(np.arange(0,10,1),map(str,np.arange(0,10,1)))    
-plt.xlabel(r'Thickness (m)',fontsize=10)   
-axb.tick_params('both',length=5.5,width=1,which='major')
+plt.xlabel(r'\textbf{Thickness (m)}',fontsize=10)   
 
 ###########################################################################
 ###########################################################################
@@ -555,7 +565,7 @@ plt.savefig(directoryfigure + 'boxtest2.png',dpi=800)
 ###########################################################################
 ###########################################################################
 
-fig = plt.figure()
+fig = plt.figure(figsize=(7,7))
 #ax = plt.subplot(111)
 
 nullfmt = NullFormatter()
@@ -612,19 +622,19 @@ axScatter.set_yticklabels(map(str,np.arange(0,8,1)))
 binwidth=0.25
 bins = np.arange(0,7 + binwidth,binwidth)
 n,bins,patches = axHistx.hist(varx[mask],bins=bins,normed=True,
-             facecolor='dimgrey',edgecolor='w',alpha=1,linewidth=0.35)
+             facecolor='dimgrey',edgecolor='w',alpha=1,linewidth=0.45)
 n,binsy,patches = axHisty.hist(vary[mask],bins=bins,normed=True,
                                orientation='horizontal',
                                facecolor='dimgrey',edgecolor='w',
-                               alpha=1,linewidth=0.35)
+                               alpha=1,linewidth=0.45)
 
 mu,sigma = sts.norm.fit(varx[mask])             
 y = mlab.normpdf(bins,mu,sigma)
-lx = axHistx.plot(bins,y,'k-',linewidth=0.5)
+#lx = axHistx.plot(bins,y,'k-',linewidth=0.5)
 
 mu2,sigma2 = sts.norm.fit(vary[mask])
 y2 = mlab.normpdf(binsy,mu2,sigma2)
-ly = axHisty.plot(y2,binsy,'k-',linewidth=0.5)
+#ly = axHisty.plot(y2,binsy,'k-',linewidth=0.5)
 
 axHistx.spines['top'].set_color('none')
 axHistx.spines['right'].set_color('none')
@@ -636,6 +646,9 @@ axHisty.spines['left'].set_color('none')
 axHisty.spines['bottom'].set_color('none')
 axScatter.spines['top'].set_color('none')
 axScatter.spines['right'].set_color('none')
+axScatter.spines['left'].set_color('darkgrey')
+axScatter.spines['bottom'].set_color('darkgrey')
+axScatter.tick_params('both',length=4,width=1.5,which='major',color='darkgrey')
 
 axHistx.xaxis.set_ticks([])
 axHistx.yaxis.set_ticks([])
@@ -653,14 +666,14 @@ axScatter.legend(shadow=False,fontsize=7,loc='center',
                        fancybox=True,ncol=1,bbox_to_anchor=(0.93,0.18),
                         frameon=False)
                         
-axScatter.grid(color='dimgrey',linewidth=0.4)
+axScatter.grid(color='darkgrey',linewidth=0.4)
 
 ### Add text
-axHistx.text(5.05,0.05,r'*LOWESS Smoothing',fontsize=8)
+#axHistx.text(5.05,0.05,r'*LOWESS Smoothing',fontsize=8)
 
 #### Add labels
-axScatter.set_xlabel(r'\textbf{sit( PIOMAS )(m)}')
-axScatter.set_ylabel(r'\textbf{sit( CryoSat-2 )(m)}')
+axScatter.set_xlabel(r'\textbf{SIT( PIOMAS )(m)}')
+axScatter.set_ylabel(r'\textbf{SIT( CryoSat-2 )(m)}')
 #
 #### Adjust plot
 fig.subplots_adjust(top=0.95)
